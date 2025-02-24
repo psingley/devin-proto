@@ -1,4 +1,4 @@
-# Boilerplate and Starter for Next.js 15+, Tailwind CSS 4, and TypeScript.
+# Boilerplate and Starter for Next.js 15+, Tailwind CSS 4, and TypeScript - Devin Test
 
 <p align="center">
   <a href="https://demo.nextjs-boilerplate.com"><img height="300" src="public/assets/images/nextjs-starter-banner.png?raw=true" alt="Next js starter banner"></a>

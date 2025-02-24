@@ -32,7 +32,7 @@
   "dependencies": {
     "@arcjet/next": "^1.0.0-beta.2",
     "@clerk/localizations": "^3.10.5",
-    "@clerk/nextjs": "^6.11.2",
+    "@clerk/nextjs": "^6.12.0",
     "@electric-sql/pglite": "^0.2.16",
     "@hookform/resolvers": "^4.0.0",
     "@logtail/pino": "^0.5.2",

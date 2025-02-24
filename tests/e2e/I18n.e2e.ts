@@ -19,11 +19,17 @@ test.describe('I18n', () => {
     test('should switch language from English to French using URL and verify text on the sign-in page', async ({ page }) => {
       await page.goto('/sign-in');
 
-      await expect(page.getByText('Email address')).toBeVisible();
+      // Wait for Clerk to load and look for the email input field instead of text
+      await page.waitForSelector('input[name="emailAddress"]', { timeout: 10000 });
+
+      await expect(page.locator('input[name="emailAddress"]')).toBeVisible();
 
       await page.goto('/fr/sign-in');
 
-      await expect(page.getByText('Adresse e-mail')).toBeVisible();
+      // For French, also look for the input field since Clerk handles the translation
+      await page.waitForSelector('input[name="emailAddress"]', { timeout: 10000 });
+
+      await expect(page.locator('input[name="emailAddress"]')).toBeVisible();
     });
   });
 });

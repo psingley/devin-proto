@@ -1,3 +1,10 @@
+# 1.0.0 (2025-02-24)
+
+
+### Bug Fixes
+
+* update Counter e2e tests to handle async loading state ([a5f2a1b](https://github.com/psingley/devin-proto/commit/a5f2a1b23198cc8696683a7b40d6ae45f4596d73))
+
 ## [3.62.1](https://github.com/ixartz/Next-js-Boilerplate/compare/v3.62.0...v3.62.1) (2025-02-22)
 
 

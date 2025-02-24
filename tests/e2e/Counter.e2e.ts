@@ -8,10 +8,11 @@ test.describe('Counter', () => {
       page,
     }) => {
       await page.goto('/counter');
-      // Wait for the counter to be visible
-      await page.waitForSelector('text=/^Count:/');
 
-      const count = page.getByText(/^Count:/);
+      // Wait for the counter to be visible and stable
+      await expect(page.getByText('Count:', { exact: false })).toBeVisible({ timeout: 10000 });
+
+      const count = page.getByText('Count:', { exact: false });
       const countText = await count.textContent();
 
       assert(countText !== null, 'Count should not be null');
@@ -20,38 +21,38 @@ test.describe('Counter', () => {
       await page.getByRole('button', { name: 'Increment' }).click();
 
       await expect(page.getByText('Number must be greater than or equal to 1')).toBeVisible();
-      await expect(page.getByText(/^Count:/)).toHaveText(countText);
+      await expect(page.getByText('Count:', { exact: false })).toHaveText(countText);
     });
 
     test('should increment the counter and validate the count', async ({
       page,
     }) => {
-      // `x-e2e-random-id` is used for end-to-end testing to make isolated requests
-      // The default value is 0 when there is no `x-e2e-random-id` header
       const e2eRandomId = faker.number.int({ max: 1000000 });
       await page.setExtraHTTPHeaders({
         'x-e2e-random-id': e2eRandomId.toString(),
       });
       await page.goto('/counter');
-      // Wait for the counter to be visible
-      await page.waitForSelector('text=/^Count:/');
 
-      const count = page.getByText(/^Count:/);
+      // Wait for the counter to be visible and stable
+      await expect(page.getByText('Count:', { exact: false })).toBeVisible({ timeout: 10000 });
+
+      const count = page.getByText('Count:', { exact: false });
       const countText = await count.textContent();
 
       assert(countText !== null, 'Count should not be null');
-
-      const countNumber = Number(countText.split(' ')[1]);
+      const countNumber = Number(countText?.replace('Count: ', '') || 0);
 
       await page.getByLabel('Increment by').fill('2');
       await page.getByRole('button', { name: 'Increment' }).click();
 
-      await expect(page.getByText(/^Count:/)).toHaveText(`Count: ${countNumber + 2}`);
+      // Wait for and verify the updated count
+      await expect(page.getByText(`Count: ${countNumber + 2}`)).toBeVisible({ timeout: 5000 });
 
       await page.getByLabel('Increment by').fill('3');
       await page.getByRole('button', { name: 'Increment' }).click();
 
-      await expect(page.getByText(/^Count:/)).toHaveText(`Count: ${countNumber + 5}`);
+      // Wait for and verify the updated count
+      await expect(page.getByText(`Count: ${countNumber + 5}`)).toBeVisible({ timeout: 5000 });
     });
   });
 });
